@@ -20,6 +20,8 @@ require("./routes/TypeOfWork")(app);
 require("./routes/New")(app);
 require("./routes/SocialNetwork")(app);
 require("./routes/Candidate")(app);
+require("./routes/Recruiment")(app);
+require("./routes/TagNew")(app);
 
 app.use(function (err, req, res, next) {
     res.status(500).send(err)

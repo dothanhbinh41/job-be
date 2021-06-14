@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       New.belongsTo(models.User),
         New.belongsToMany(models.Tag, {
           through: "TagNews"
-        })
+        }),
+        New.hasMany(models.TagNew, { foreignKey: 'newId', as: "tagnew" })
     }
   };
   New.init({

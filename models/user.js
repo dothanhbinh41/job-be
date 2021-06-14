@@ -20,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
           through: "Recruitments"
         })
       User.hasMany(models.NotificationUser),
-        User.hasMany(models.New)
-      User.hasOne(models.Candidate)
+        User.hasMany(models.New),
+        User.hasOne(models.Candidate),
+        User.hasMany(models.UserRole)
     }
   };
   User.init({
