@@ -14,12 +14,18 @@ module.exports = (sequelize, DataTypes) => {
         Work.belongsToMany(models.User, {
           through: "SaveWorks"
         }),
+        Work.belongsToMany(models.User, {
+          through: "WorkApplies",
+          as: "workapply2"
+        }),
         Work.belongsToMany(models.Tag, {
           through: "TagWorks"
         }),
         Work.belongsToMany(models.TypeOfWork, {
           through: "WorkTypeOfWorks"
-        })
+        }),
+        Work.hasMany(models.TagWork, { foreignKey: 'workId', as: "tagWork" }),
+        Work.hasMany(models.WorkTypeOfWork, { foreignKey: 'workId', as: "workType" })
     }
   };
   Work.init({
@@ -35,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     addressGoogle: DataTypes.STRING,
     email: DataTypes.STRING,
     phone: DataTypes.STRING,
-    price: DataTypes.STRING,
+    price1: DataTypes.INTEGER,
+    price2: DataTypes.INTEGER,
     request: DataTypes.STRING,
     interest: DataTypes.STRING,
     dealtime: DataTypes.STRING,

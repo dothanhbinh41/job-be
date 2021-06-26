@@ -17,16 +17,31 @@ exports.count = (req, res) => {
 }
 exports.findall = (req, res) => {
     var page = req.query.page;
-    if (page) {
-        page = parseInt(page)
-        let soLuongBoQua = (page - 1) * PAGE_SIZE;
-        Tag.findAndCountAll({order: [["id", "DESC"]], offset: soLuongBoQua, limit: PAGE_SIZE }).then(data => {
-            res.json({ data: data })
-        }).catch(er => {
-            throw er;
-        })
+    var status = req.query.status;
+    if (page || status) {
+        if (page && !status) {
+            page = parseInt(page)
+            let soLuongBoQua = (page - 1) * PAGE_SIZE;
+            Tag.findAndCountAll({ order: [["id", "DESC"]], offset: soLuongBoQua, limit: PAGE_SIZE }).then(data => {
+                res.json({ data: data })
+            }).catch(er => {
+                throw er;
+            })
+        } else if (status && !page) {
+            Tag.findAndCountAll({ where: { status: status }, order: [["id", "DESC"]] }).then(data => {
+                res.json({ data: data })
+            }).catch(er => {
+                throw er;
+            })
+        } else {
+            Tag.findAndCountAll({ where: { status: status }, order: [["id", "DESC"]], offset: soLuongBoQua, limit: PAGE_SIZE }).then(data => {
+                res.json({ data: data })
+            }).catch(er => {
+                throw er;
+            })
+        }
     } else {
-        Tag.findAndCountAll({order: [["id", "DESC"]]}).then(data => {
+        Tag.findAndCountAll({ order: [["id", "DESC"]] }).then(data => {
             res.json({ data: data })
         }).catch(er => {
             throw er;

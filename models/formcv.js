@@ -3,28 +3,27 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class TypeOfWork extends Model {
+  class FormCV extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      TypeOfWork.belongsToMany(models.Work, {
-        through: "WorkTypeOfWorks"
-      })
-      TypeOfWork.belongsToMany(models.User, {
-        through: "UserTypeOfWorks"
-      })
+      FormCV.belongsToMany(models.Tag, {
+        through: "TagFormCVs"
+      }),
+        FormCV.hasMany(models.TagFormCV, { foreignKey: 'formCVId', as: "tagform" })
     }
   };
-  TypeOfWork.init({
+  FormCV.init({
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    status: DataTypes.INTEGER
+    avatar: DataTypes.STRING,
+    status: DataTypes.INTEGER,
+    content: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'TypeOfWork',
+    modelName: 'FormCV',
   });
-  return TypeOfWork;
+  return FormCV;
 };

@@ -3,28 +3,29 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class TypeOfWork extends Model {
+  class UserTag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      TypeOfWork.belongsToMany(models.Work, {
-        through: "WorkTypeOfWorks"
-      })
-      TypeOfWork.belongsToMany(models.User, {
-        through: "UserTypeOfWorks"
+      UserTag.belongsTo(models.Tag, {
+        foreignKey: "tagId",
+        targetKey: "id"
+      });
+      UserTag.belongsTo(models.User, {
+        foreignKey: "userId",
+        targetKey: "id"
       })
     }
   };
-  TypeOfWork.init({
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    status: DataTypes.INTEGER
+  UserTag.init({
+    tagId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'TypeOfWork',
+    modelName: 'UserTag',
   });
-  return TypeOfWork;
+  return UserTag;
 };

@@ -18,11 +18,23 @@ module.exports = (sequelize, DataTypes) => {
         }),
         User.belongsToMany(models.Company, {
           through: "Recruitments"
+        }),
+        User.belongsToMany(models.Work, {
+          through: "WorkApplies",
+          as: "workapply"
         })
-      User.hasMany(models.NotificationUser),
+      User.belongsToMany(models.TypeOfWork, {
+        through: "UserTypeOfWorks"
+      }),
+        User.belongsToMany(models.Tag, {
+          through: "UserTags"
+        }),
+
+        User.hasMany(models.NotificationUser),
         User.hasMany(models.New),
         User.hasOne(models.Candidate),
         User.hasMany(models.UserRole)
+      User.hasMany(models.UserTag)
     }
   };
   User.init({
@@ -34,6 +46,8 @@ module.exports = (sequelize, DataTypes) => {
     male: DataTypes.STRING,
     avatar: DataTypes.STRING,
     date: DataTypes.STRING,
+    introduce: DataTypes.TEXT,
+    banner: DataTypes.STRING(500),
     status: DataTypes.INTEGER
   }, {
     sequelize,

@@ -35,6 +35,15 @@ module.exports = {
       phone: {
         type: Sequelize.STRING
       },
+      avatar: {
+        type: Sequelize.STRING(500)
+      },
+      banner: {
+        type: Sequelize.STRING(500)
+      },
+      introduce: {
+        type: Sequelize.TEXT
+      },
       status: {
         type: Sequelize.INTEGER
       },

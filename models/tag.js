@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         Tag.belongsToMany(models.Work, {
           through: "TagWorks"
         })
+      Tag.belongsToMany(models.User, {
+        through: "UserTags"
+      }),
+        Tag.belongsToMany(models.FormCV, {
+          through: "TagFormCVs"
+        })
     }
   };
   Tag.init({

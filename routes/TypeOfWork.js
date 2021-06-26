@@ -8,5 +8,5 @@ module.exports = app => {
     router.delete('/:id', TypeOfWork.delete);
     router.patch('/:id', TypeOfWork.update);
 
-    app.use("/typeOfWorks", router);
+    app.use("/typeWorks", router);
 }
