@@ -35,8 +35,12 @@ require("./routes/GetUserSaveWork")(app);
 require("./routes/GetCompanySaveUser")(app);
 require("./routes/WorkApply")(app);
 require("./routes/CheckWorkApply")(app);
+require("./routes/CheckUserApply")(app);
 require("./routes/FormCV")(app);
 require("./routes/TagFormCV")(app);
+require("./routes/GetCategoriHome")(app);
+require("./routes/SearchWork")(app);
+require("./routes/UserRole")(app);
 
 
 app.use(function (err, req, res, next) {

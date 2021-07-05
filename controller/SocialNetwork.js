@@ -11,10 +11,10 @@ exports.create = (req, res) => {
 exports.findall = (req, res) => {
     var page = req.query.page;
     var status = req.query.status;
+    page = parseInt(page)
+    let soLuongBoQua = (page - 1) * PAGE_SIZE;
     if (page || status) {
         if (page && !status) {
-            page = parseInt(page)
-            let soLuongBoQua = (page - 1) * PAGE_SIZE;
             SocialNetwork.findAndCountAll({ order: [["id", "DESC"]], offset: soLuongBoQua, limit: PAGE_SIZE }).then(data => {
                 res.json({ data: data })
             }).catch(er => {

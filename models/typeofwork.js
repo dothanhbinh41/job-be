@@ -16,11 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       TypeOfWork.belongsToMany(models.User, {
         through: "UserTypeOfWorks"
       })
+      // TypeOfWork.hasMany(models.Work)
     }
   };
   TypeOfWork.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
+    icon: DataTypes.STRING,
     status: DataTypes.INTEGER
   }, {
     sequelize,

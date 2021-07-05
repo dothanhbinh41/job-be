@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.NotificationUser),
         User.hasMany(models.New),
         User.hasOne(models.Candidate),
-        User.hasMany(models.UserRole)
+        User.hasMany(models.UserRole,{as:"asUserRole"})
       User.hasMany(models.UserTag)
     }
   };

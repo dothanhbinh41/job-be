@@ -5,15 +5,17 @@ const jwt = require('jsonwebtoken')
 const Role = require("../models").Role;
 exports.loginCompany = (req, res) => {
     const email = req.body.email;
+    const status=req.body.status;
     const password = req.body.password;
     Company.findAll({
-        where: { email: email, password: password },
+        where: { email: email, password: password ,status:status},
     }).then(data => {
         if (data[0] !== undefined) {
             var company = {
                 id: data[0].id,
                 name: data[0].name,
                 avatar: data[0].avatar,
+                role:"",
                 type: "company"
             };
             var token = jwt.sign({ user: company }, process.env.ACCESS_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '3h' });
@@ -47,17 +49,17 @@ exports.checkLogin = (req, res) => {
 exports.loginUser = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-
+    const status=req.body.status;
     User.findAll({
-        where: { email: email, password: password }
+        where: { email: email, password: password,status:status },
+        include:[Role]
     }).then(data => {
         if (data[0] !== undefined) {
             var user = {
                 id: data[0].id,
-                // role: data[0].Roles[0].name,
-                // mota: data[0].Roles[0].mota
                 avatar: data[0].avatar,
                 name: data[0].name,
+                role: data[0].Roles[0].name,
                 type: "user"
             };
             var token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, { algorithm: 'HS256', expiresIn: '3h' });
