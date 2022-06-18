@@ -1,5 +1,6 @@
 var Work = require('../models').Work;
 var Company = require('../models').Company;
+var TypeOfWork = require('../models').TypeOfWork;
 var TagWork = require('../models').TagWork;
 var WorkTypeOfWork = require('../models').WorkTypeOfWork;
 require('dotenv').config();
@@ -8,7 +9,9 @@ const Op = Sequelize.Op;
 
 let PAGE_SIZE = parseInt(process.env.PAGE_SIZE);
 exports.create = (req, res) => {
-  Work.create(req.body, { include: ['tagWork', 'workType'] })
+  Work.create(req.body, {
+    include: ['tagWork', 'workType'],
+  })
     .then((data) => {
       res.json({ data: data });
     })
@@ -136,7 +139,10 @@ exports.findAllId = (req, res) => {
   }
 };
 exports.findone = (req, res) => {
-  Work.findOne({ where: { id: req.params.id }, include: [Company] })
+  Work.findOne({
+    where: { id: req.params.id },
+    include: [Company, TypeOfWork, 'tagWork'],
+  })
     .then((data) => {
       res.json({ data: data });
     })
@@ -154,7 +160,10 @@ exports.delete = (req, res) => {
     });
 };
 exports.update = (req, res) => {
-  Work.update(req.body, { where: { id: req.params.id } })
+  Work.update(req.body, {
+    where: { id: req.params.id },
+    include: ['tagWork', 'workType'],
+  })
     .then((data) => {
       res.json({ data: data });
     })
