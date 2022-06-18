@@ -18,7 +18,7 @@
     "mongodb": "^3.6.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.5.1",
+    "sequelize": "^6.21.0",
     "sequelize-cli": "^6.2.0"
   }
 }
