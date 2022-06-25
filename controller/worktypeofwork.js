@@ -1,4 +1,5 @@
 var WorkTypeOfWork = require('../models').WorkTypeOfWork;
+var Work = require('../models').Work;
 
 exports.create = (req, res) => {
   WorkTypeOfWork.bulkCreate(req.body)

@@ -39,8 +39,11 @@ exports.delete = (req, res) => {
       throw er;
     });
 };
+
 exports.update = (req, res) => {
-  WorkApply.update(req.body, { where: { id: req.params.id } })
+  WorkApply.update(req.body, {
+    where: { userId: req.body.userId, workId: req.body.workId },
+  })
     .then((data) => {
       res.json({ data: data });
     })
@@ -69,7 +72,7 @@ exports.checkWorkApply = (req, res) => {
               'male',
               'email',
             ],
-            through: { attributes: ['link', 'message'] },
+            through: { attributes: ['link', 'message', 'sechedule'] },
           },
         ],
       },

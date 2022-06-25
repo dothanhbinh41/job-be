@@ -22,42 +22,67 @@ exports.create = (req, res) => {
 exports.findall = (req, res) => {
   var page = req.query.page;
   var status = req.query.status;
+  var name = req.query.name;
+
   page = parseInt(page);
   let soLuongBoQua = (page - 1) * PAGE_SIZE;
-  if (page || status) {
-    if (page && !status) {
-      Work.findAndCountAll({
-        order: [['id', 'DESC']],
-        offset: soLuongBoQua,
-        limit: PAGE_SIZE,
-        include: [Company],
+  if (name) {
+    Work.findAndCountAll({
+      order: [['id', 'DESC']],
+      include: [
+        { model: Company, where: { name: { [Op.like]: `%${name}%` } } },
+      ],
+    })
+      .then((data) => {
+        res.json({ data: data });
       })
-        .then((data) => {
-          res.json({ data: data });
+      .catch((er) => {
+        throw er;
+      });
+  } else {
+    if (page || status) {
+      if (page && !status) {
+        Work.findAndCountAll({
+          order: [['id', 'DESC']],
+          offset: soLuongBoQua,
+          limit: PAGE_SIZE,
+          include: [Company],
         })
-        .catch((er) => {
-          throw er;
-        });
-    } else if (status && !page) {
-      Work.findAndCountAll({
-        where: { status: status },
-        order: [['id', 'DESC']],
-        include: [Company],
-      })
-        .then((data) => {
-          res.json({ data: data });
+          .then((data) => {
+            res.json({ data: data });
+          })
+          .catch((er) => {
+            throw er;
+          });
+      } else if (status && !page) {
+        Work.findAndCountAll({
+          where: { status: status },
+          order: [['id', 'DESC']],
+          include: [Company],
         })
-        .catch((er) => {
-          throw er;
-        });
+          .then((data) => {
+            res.json({ data: data });
+          })
+          .catch((er) => {
+            throw er;
+          });
+      } else {
+        Work.findAndCountAll({
+          where: { status: status },
+          order: [['id', 'DESC']],
+          offset: soLuongBoQua,
+          limit: PAGE_SIZE,
+          include: [Company],
+        })
+          .then((data) => {
+            res.json({ data: data });
+          })
+          .catch((er) => {
+            throw er;
+          });
+      }
     } else {
-      Work.findAndCountAll({
-        where: { status: status },
-        order: [['id', 'DESC']],
-        offset: soLuongBoQua,
-        limit: PAGE_SIZE,
-        include: [Company],
-      })
+      Work.findAndCountAll({ order: [['id', 'DESC']], include: [Company] })
         .then((data) => {
           res.json({ data: data });
         })
@@ -65,14 +90,6 @@ exports.findall = (req, res) => {
           throw er;
         });
     }
-  } else {
-    Work.findAndCountAll({ order: [['id', 'DESC']], include: [Company] })
-      .then((data) => {
-        res.json({ data: data });
-      })
-      .catch((er) => {
-        throw er;
-      });
   }
 };
 exports.search = (req, res) => {
