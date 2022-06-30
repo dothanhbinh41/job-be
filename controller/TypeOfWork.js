@@ -14,14 +14,16 @@ exports.create = (req, res) => {
 exports.findall = (req, res) => {
   var page = req.query.page;
   var status = req.query.status;
+  var pageSize = req.query.pageSize;
   page = parseInt(page);
-  let soLuongBoQua = (page - 1) * PAGE_SIZE;
+  let PA_SI = pageSize || PAGE_SIZE;
+  let soLuongBoQua = (page - 1) * PA_SI;
   if (page || status) {
     if (page && !status) {
       TypeOfWork.findAndCountAll({
         order: [['id', 'DESC']],
         offset: soLuongBoQua,
-        limit: PAGE_SIZE,
+        limit: PA_SI,
       })
         .then((data) => {
           res.json({ data: data });
@@ -46,7 +48,7 @@ exports.findall = (req, res) => {
         where: { status: status },
         order: [['id', 'DESC']],
         offset: soLuongBoQua,
-        limit: PAGE_SIZE,
+        limit: PA_SI,
       })
         .then((data) => {
           res.json({ data: data });

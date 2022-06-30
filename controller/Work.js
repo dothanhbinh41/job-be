@@ -21,11 +21,14 @@ exports.create = (req, res) => {
 };
 exports.findall = (req, res) => {
   var page = req.query.page;
+  console.log('req.query', req.query);
   var status = req.query.status;
   var name = req.query.name;
+  var pageSize = req.query.pageSize;
+  let PA_SI = parseInt(pageSize) || PAGE_SIZE;
 
   page = parseInt(page);
-  let soLuongBoQua = (page - 1) * PAGE_SIZE;
+  let soLuongBoQua = (page - 1) * PA_SI;
   if (name) {
     Work.findAndCountAll({
       order: [['id', 'DESC']],
@@ -45,7 +48,7 @@ exports.findall = (req, res) => {
         Work.findAndCountAll({
           order: [['id', 'DESC']],
           offset: soLuongBoQua,
-          limit: PAGE_SIZE,
+          limit: PA_SI,
           include: [Company],
         })
           .then((data) => {
@@ -71,7 +74,7 @@ exports.findall = (req, res) => {
           where: { status: status },
           order: [['id', 'DESC']],
           offset: soLuongBoQua,
-          limit: PAGE_SIZE,
+          limit: PA_SI,
           include: [Company],
         })
           .then((data) => {
