@@ -9,8 +9,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send('<h1>Chào tất cả các bạn đến với api jobIt!</h1>');
 });
-require('./routes/loginCompany')(app);
-require('./routes/loginUser')(app);
+require('./routes/LoginCompany')(app);
+require('./routes/LoginUser')(app);
 require('./routes/Tag')(app);
 require('./routes/Statistical')(app);
 require('./routes/SendMail')(app);
