@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  var WorkTypeOfWork = require('../controller/WorkTypeOfWork');
+  var WorkTypeOfWork = require('../controller/worktypeofwork');
   var router = require('express').Router();
 
   router.post('/', WorkTypeOfWork.create);
